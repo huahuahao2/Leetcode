@@ -5,7 +5,6 @@ public class ZigZag_Conversion {
 	}
 
 	public static String convert(String s, int nRows) {/*more straight forward, but O(n2)*/
-		StringBuffer sc[] = new StringBuffer[nRows];
 		StringBuffer scvt = new StringBuffer();
 		if (nRows == 1)
 			return s;
