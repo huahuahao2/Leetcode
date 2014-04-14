@@ -1,14 +1,5 @@
 
 //Definition for singly-linked list.
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) {
-        val = x;
-        next = null;
-    }
-}
-
 
 public class Remove_Nth_Node_From_End_of_List {
     public ListNode removeNthFromEnd(ListNode head, int n) {
