@@ -1,6 +1,10 @@
+import java.util.Arrays;
+
 public class Add_Binary {
 	public static void main(String[] args) {
-		int[] num = {1,-2,-5,-4,-3,3,3,5};
+		int[] num = {1};
+		Arrays.sort(num);
+		System.out.println(Arrays.toString(num));
 		System.out.println(addBinary("1111","1111"));
 	}
 	public static String addBinary(String a, String b) {
