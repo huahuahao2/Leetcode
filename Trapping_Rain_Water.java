@@ -2,7 +2,7 @@ public class Trapping_Rain_Water {
 	public int trap(int[] A) {
 		if (A.length <= 2)
 			return 0;
-
+		//left to right
 		int rain = 0, block = 0, eindex = 0;
 		for (int i = 1; i < A.length; i++) {
 			if (A[i] >= A[eindex]) {
@@ -12,6 +12,7 @@ public class Trapping_Rain_Water {
 			} else
 				block += A[i];
 		}
+		//right to left
 		int maxindex = eindex;
 		eindex = A.length - 1;
 		block = 0;
