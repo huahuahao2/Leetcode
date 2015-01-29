@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Set;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -53,6 +54,34 @@ public class Word_Ladder {
         		}
         		s = cur.x.toCharArray();
         	}
+        }
+        return 0;
+    }
+    public int ladderLength_2015(String start, String end, Set<String> dict) {
+        LinkedList<String> list = new LinkedList<String>();
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        dict.add(end);
+        list.add(start);
+        map.put(start, 1);
+        while (!list.isEmpty()) {
+            String cur = list.removeFirst();
+            int num = map.get(cur);
+            StringBuilder sb = new StringBuilder(cur);
+            for(int i = 0; i < start.length(); i++) {
+                char old = cur.charAt(i);
+                for(char j = 'a'; j <= 'z'; j++) {
+                    sb.setCharAt(i, 'a');
+                    String update = sb.toString();
+                    if (!map.containsKey(update) && dict.contains(update)) {
+                        
+                        list.add(update);
+                        map.put(update,num+1);
+                        if(map.containsKey(end))
+                            return map.get(end);
+                    }
+                }
+                sb.setCharAt(i, old);
+            }
         }
         return 0;
     }

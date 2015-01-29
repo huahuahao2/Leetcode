@@ -21,4 +21,17 @@ public class Reverse_Words_in_a_String {
         }
         return result;
     }
+    //be aware when split wiht space.
+    public String reverseWords_2(String s) {
+        s = s.trim();
+        String[] parts = s.split(" ");
+        StringBuilder ret = new StringBuilder();
+        for(int i = parts.length-1 ; i >= 0; i--) {
+            if (!parts[i].equals("")) {
+                ret.append(parts[i]);
+                ret.append(" ");
+            }
+        }
+        return ret.toString().trim();
+    }
 }

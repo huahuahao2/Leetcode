@@ -30,4 +30,27 @@ public class Evaluate_Reverse_Polish_Notation {
         }
         return value.peek();
     }
+    public int evalRPN_2(String[] tokens) {
+        Stack<Integer> stack = new Stack<Integer>();
+        for(String s : tokens) {
+            if(s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/")) {
+                int i = stack.pop();
+                int j = stack.pop();
+                int cur = 0;
+                if (s.equals("+"))
+                    cur = i+j;
+                if (s.equals("-"))
+                    cur = i-j;
+                if (s.equals("*"))
+                    cur = i*j;
+                if (s.equals("/"))
+                    cur = i/j;
+                stack.push(cur);
+            }
+            else {
+                stack.push(Integer.parseInt(s));
+            }
+        }
+        return stack.pop();
+    }
 }

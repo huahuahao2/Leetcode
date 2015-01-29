@@ -26,4 +26,25 @@ public class Insertion_Sort_List {
         }
         return ret.next;
     }
+    //the cleaner the better
+    public ListNode insertionSortList_01272015(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+        ListNode begin = new ListNode(0);
+        ListNode ret = begin;
+
+        ListNode insert = head, next = insert.next; 
+        while(insert != null) {
+            next = insert.next;
+            while (begin.next != null && begin.next.val < insert.val) {
+                begin = begin.next;
+            }
+            insert.next = begin.next;
+            begin.next = insert;
+            //
+            begin = ret;
+            insert = next;
+        }
+        return ret.next;
+    }
 }

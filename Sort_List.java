@@ -11,7 +11,13 @@ public class Sort_List {
 		list12.next = list21;
 		//ListNode list22 = new ListNode(1);
 		//list21.next = list22;
-		System.out.println(sortList3(list11).val);
+        ListNode cur = sortList_01172015(list11);
+        System.out.println("-dsa>");
+        while(cur != null) {
+            System.out.println(cur.val+"->");
+            cur = cur.next;
+        }
+		
 	}
 	//--------------------heap sort--------------------------------------------------
     public ListNode sortList(ListNode head) {
@@ -137,5 +143,59 @@ public class Sort_List {
     		crazy = temp2;
     	}
     	return retval.next;
+    }
+    //01/27/2015 try
+    //sometime recursive can be solved by bottom up
+    public static ListNode sortList_01172015(ListNode head) {
+        ListNode next_pivot = head;
+        ListNode cur = head, next = head;
+        ListNode begin = new ListNode(0);
+        begin.next = head;
+        ListNode ret = begin;
+        int num = 0;
+        while (cur != null) {
+            num++;
+            cur = cur.next;
+        }
+
+        for (int i = 1; i < num * 2; i *= 2) {
+            next_pivot = ret.next;
+            cur = ret.next;
+            next = ret.next;
+            begin = ret;
+            while (next_pivot != null) {
+                cur = next_pivot;
+                next = cur;
+                for (int k = 0; k < i && next != null; k++)
+                    next = next.next;
+                next_pivot = next;
+                for (int k = 0; k < i && next_pivot != null; k++)
+                    next_pivot = next_pivot.next;
+                ListNode cur_end = next;
+                while (cur != cur_end && next != next_pivot) {
+                    if (cur.val < next.val) {
+                        begin.next = cur;
+                        cur = cur.next;
+                    } else {
+                        begin.next = next;
+                        next = next.next;
+                    }
+                    begin = begin.next;
+                }
+                while (cur != cur_end) {
+                    begin.next = cur;
+                    cur = cur.next;
+                    begin = begin.next;
+                }
+                while (next != next_pivot) {
+                    begin.next = next;
+                    next = next.next;
+                    begin = begin.next;
+                }
+                begin.next = next_pivot;
+                // i*=2;
+            }
+        }
+        return ret.next;
     }
 }

@@ -4,7 +4,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.LinkedHashSet;
 import java.util.ArrayDeque;
-
+import java.util.Set;
+import java.util.List;
 
 public class Word_Ladder_II {
 	public static void main(String[] args) {
@@ -168,8 +169,8 @@ public class Word_Ladder_II {
         return ret;
     }
     //---------------------------------------------
-    //相当于建立的是逆向的树 采用回溯的方式找
-	public ArrayList<ArrayList<String>> findLadders3(String start, String end, HashSet<String> dict) {
+    /*相当于建立的是逆向的树 采用回溯的方式找*/
+    public ArrayList<ArrayList<String>> findLadders3(String start, String end, HashSet<String> dict) {
 		HashMap<String, HashSet<String>> visited = new HashMap<String, HashSet<String>>();
 		HashMap<String, Integer> level = new HashMap<String, Integer>();
 		LinkedList<String> queue = new LinkedList<String>();
@@ -242,4 +243,61 @@ public class Word_Ladder_II {
 		}
 		return result;
 	}
+
+    
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+        LinkedList<String> list = new LinkedList<String>();
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, ArrayList<String>> trace = new HashMap<String, ArrayList<String>>();
+        dict.add(end);
+        list.add(start);
+        map.put(start, 1);
+        while (!list.isEmpty()) {
+            String cur = list.removeFirst();
+            if (cur.equals(end)) {
+                break;
+            }
+            int num = map.get(cur);
+            StringBuilder sb = new StringBuilder(cur);
+            for(int i = 0; i < start.length(); i++) {
+                char old = cur.charAt(i);
+                for(char j = 'a'; j <= 'z'; j++) {
+                    sb.setCharAt(i, j);
+                    String update = sb.toString();
+                    if (!map.containsKey(update)) {
+                        if (dict.contains(update)) {
+                            list.add(update);
+                            map.put(update,num+1);
+                            ArrayList<String> from = new ArrayList<String>();
+                            from.add(cur);
+                            trace.put(update, from);
+                        }
+                    }
+                    else {
+                        if (map.get(update) == num+1) {
+                            trace.get(update).add(cur);
+                        }
+                    }
+                }
+                sb.setCharAt(i, old);
+            }
+        }
+        //trace back
+        List<List<String>> ret = new LinkedList<List<String>>();
+        traceback(start, back, ll, trace, ret);
+        return ret;
+    }
+
+    void traceback(String start, String s, LinkedList<String> ll, HashMap<String, ArrayList<String>> trace, List<List<String>> ret) {
+        ll.addFirst(s);
+        if (s.equals(start)) {
+            ret.add(new LinkedList<String>(ll));
+        }
+        ArrayList<String> cur = trace.get(s);
+        for (String back : cur) {
+            traceback(start, back, ll, trace, ret);
+        }
+        ll.removeFirst();
+    }
+    // well to avoid recursive I can also code in DFS and use stack to help.
 }
