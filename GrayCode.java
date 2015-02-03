@@ -13,4 +13,14 @@ public class GrayCode {
 		}
 		return ret;
 	}
+	//recent add 2015
+	//no need to explain again the amazing of bit manipulation
+    public List<Integer> grayCode(int n) {
+        List<Integer> ret = new ArrayList<Integer>();
+        for(int i = 0; i < (int)Math.pow(2,n); i++) {
+            ret.add((i>>1)^i);
+        }
+        return ret;
+    }
+
 }
