@@ -41,4 +41,28 @@ public class Convert_Sorted_List_to_Binary_Search_Tree {
     	return cur;
     }
 
+    //use the fact that move one by one
+    ListNode ln;
+    public TreeNode sortedListToBST(ListNode head) {
+        ln = head;
+        int count = 0;
+        while (ln != null) {
+            count++;
+            ln = ln.next;
+        }
+        ln = head;
+        return sortedListToBST(1, count);
+    }
+    public TreeNode sortedListToBST(int i, int j) {
+        if (i > j)
+            return null;
+        TreeNode left = sortedListToBST(i, (i+j)/2-1);
+        TreeNode cur = new TreeNode(ln.val);
+        ln = ln.next;
+        TreeNode right = sortedListToBST((i+j)/2+1, j);
+        cur.left = left;
+        cur.right = right;
+        return cur;
+        
+    }
 }

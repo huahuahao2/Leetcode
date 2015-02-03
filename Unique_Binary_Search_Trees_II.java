@@ -11,6 +11,7 @@ public class Unique_Binary_Search_Trees_II {
     	if(s > n)
     		list.add(null);
         for (int i = s; i<=n; i++) {
+            //trueth is here you share some node together.
         	List<TreeNode> listl = generateTrees(s, i-1);
         	List<TreeNode> listr = generateTrees(i+1, n);
         	for(TreeNode a : listl) {

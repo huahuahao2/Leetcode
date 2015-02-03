@@ -28,4 +28,30 @@ public class Triangle {
         }
         return min;
     }
+    //list can use get funtion
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int[] upper_sum = new int[triangle.size()];
+        int[] cur_sum = new int[triangle.size()];
+        int[] temp = null;
+        int ret = Integer.MAX_VALUE;
+        for(List<Integer> level : triangle) {
+            int k = 0;
+            for(int i : level) {
+                if (k == 0)
+                    cur_sum[k] = upper_sum[k] + i;
+                else if(k == level.size()-1)
+                    cur_sum[k] = upper_sum[k-1] + i;
+                else
+                    cur_sum[k] = Math.min(upper_sum[k-1], upper_sum[k]) + i;
+                k++;
+            }
+            temp = upper_sum;
+            upper_sum = cur_sum;
+            cur_sum = temp;
+        }
+        for(int i = 0; i < triangle.size() ; i++) {
+            ret = Math.min(upper_sum[i], ret);
+        }
+        return ret;
+    }
 }

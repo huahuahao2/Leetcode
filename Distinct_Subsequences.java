@@ -48,7 +48,29 @@ public class Distinct_Subsequences {
         return c[S.length()];
     }
 
-    
+    public static int numDistinct(String S, String T) {
+        int[] opt = new int[S.length()+1];
+        int temp = 0;
+        //base
+        for(int i = 0; i <= S.length(); i++) {
+            opt[i] = 1;
+        }
+        for(int i = 1; i <= T.length(); i++) {
+            int last = opt[0];
+            opt[0] = 0;
+            for(int j = 1; j <= S.length(); j++) {
+                temp = opt[j];
+                if (T.charAt(i-1) == S.charAt(j-1)) {
+                    opt[j] = opt[j-1]+last;
+                }
+                else
+                    opt[j] = opt[j-1];
+                
+                last = temp;
+            }
+        }
+        return opt[S.length()];
+    }
     
     
 }

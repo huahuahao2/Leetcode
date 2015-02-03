@@ -21,4 +21,26 @@ public class Longest_Consecutive_Sequence {
         }
         return max;
     }
+
+    public int longestConsecutive2(int[] num) {
+        HashSet<Integer> nums = new HashSet<Integer>();
+        int ret = 0;
+        for (int i : num) {
+            nums.add(i);
+        }
+        for (int i : num) {
+            if (nums.contains(i)) {
+                nums.remove(i);
+                int count = 1;
+                for (int k = 1; nums.contains(i-k); k++, count++) {
+                    nums.remove(i-k);
+                }
+                for (int k = 1; nums.contains(i+k); k++, count++) {
+                    nums.remove(i+k);
+                }
+                ret = Math.max(ret, count);
+            }
+        }
+        return ret;
+    }
 }

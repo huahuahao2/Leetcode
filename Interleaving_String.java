@@ -52,13 +52,59 @@ public class Interleaving_String {
      * return opt[n][m]
      */
     public static boolean isInterleave2(String s1, String s2, String s3) {
-    	boolean[][] opt = new boolean[s1.length()+1][s2.length()+1];
-    	opt[0][0] = true;
-    	for (int i = 1; i <= s3.length(); i++) {
-    		for (int j = 0 ; j <= i ; j++) {
-    			opt[j][i-j] = false;
-    		}
-    	}
-        return isInterleave(s1, s2, s3, 0 , 0);
+        boolean[][] opt = new boolean[s1.length()+1][s2.length()+1];
+        opt[0][0] = true;
+        if(s1.length()+s2.length()!=s3.length())
+            return false;
+        for(int k = 1; k <= s3.length(); k++) {
+            for(int i = 0, j = k-i; i <= k; i++, j-- ) {
+                if(j<=s2.length() &&i<=s1.length() && i>0 &&s1.charAt(i-1) == s3.charAt(k-1))
+                    opt[i][j] |= opt[i-1][j];
+                if(i<=s1.length() &&j<=s2.length() && j>0 &&s2.charAt(j-1) == s3.charAt(k-1))
+                    opt[i][j] |= opt[i][j-1];
+            }
+        }
+        return opt[s1.length()][s2.length()];
     }
+
+
+    //compute your time complexity
+    public boolean isInterleave(String s1, String s2, String s3) {
+        Stack<Integer> s_index1 = new Stack<Integer>();
+        Stack<Integer> s_index2 = new Stack<Integer>();
+        Stack<Integer> s_index3 = new Stack<Integer>();
+        int i = 0, j = 0, k = 0;
+        if(s1.length()+s2.length() < s3.length()) {
+            return false;
+        }
+        while(k<s3.length()) {
+            if((i < s1.length() && s1.charAt(i) == s3.charAt(k)) || (j < s2.length() && s2.charAt(j) == s3.charAt(k))) {
+                if(i < s1.length() && j < s2.length() && s1.charAt(i) == s2.charAt(j)) {
+                    s_index1.add(i);
+                    s_index2.add(j+1);
+                    s_index3.add(k+1);
+                    i++;
+                    k++;
+                }
+                else {
+                    if(i < s1.length() && s1.charAt(i) == s3.charAt(k))
+                        i++;
+                    else
+                        j++;
+                    k++;
+                }
+            }
+            else {
+                if (!s_index1.isEmpty()) {
+                    i = s_index1.pop();
+                    j = s_index2.pop();
+                    k = s_index3.pop();
+                }
+                else
+                    return false;
+            }
+        }
+        return true;
+    }
+
 }

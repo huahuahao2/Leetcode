@@ -87,4 +87,31 @@ public class Best_Time_to_Buy_and_Sell_Stock {
 
     	return profit1 + profit2;
     }
+
+    static int TRANSACTIONS = 2;
+    public int maxProfit(int[] prices) {
+        if (prices.length == 0)
+            return 0;
+        //I should be able to recognize that this is a DP problem.
+        int ret = 0;
+        int[][] opt = new int[TRANSACTIONS+1][prices.length];
+        //base
+        for(int i = 0; i < prices.length; i++) {
+            opt[0][i] = 0;
+        }
+        for(int t = 0; t <= TRANSACTIONS; t++) {
+            opt[t][0] = 0;
+        }
+        for(int t = 1; t <= TRANSACTIONS; t++) {
+            int cur_money = opt[t-1][0]-prices[0];
+            for(int i = 1; i < prices.length; i++) {
+                cur_money = Math.max(opt[t-1][i]-prices[i], cur_money);
+                opt[t][i] = Math.max(cur_money+prices[i], opt[t][i-1]);
+                ret = Math.max(opt[t][i], ret);
+            }
+        }
+        return ret;
+        
+    }
+
 }

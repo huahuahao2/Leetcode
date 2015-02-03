@@ -21,4 +21,21 @@ public class Pascal_Triangle {
         }
         return ret;
     }
+    
+    public List<List<Integer>> generate(int numRows) {
+        LinkedList<List<Integer>> list = new LinkedList<List<Integer>>();
+        for(int i = 1; i <= numRows; i++) {
+            List<Integer> cur = new ArrayList<Integer>(i);
+            cur.add(1);
+            if(i!=1) {
+                List<Integer> last = list.getLast();
+                for(int k = 0; k < i-2; k++) {
+                     cur.add(last.get(k)+last.get(k+1));
+                }
+                cur.add(1);
+            }
+            list.add(cur);
+        }
+        return list;
+    }
 }

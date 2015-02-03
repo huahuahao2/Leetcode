@@ -65,4 +65,33 @@ public class Restore_IP_Addresses {
         }
         return ret;
     }
+    //see my old code, the impression of doing bad the second time is wrong.
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ret = new ArrayList<String>();
+        StringBuilder sb = new StringBuilder(s);
+        build(s,sb,0,s.length()-4,0,ret);
+        return ret;
+        
+    }
+    void build(String s, StringBuilder sb, int start, int left, int dot, List<String> ret) {
+
+        for(int i = start+1; i <= start+3 && i <= start+left+1 ; i++) {
+            if (i-start > 1 && s.charAt(start) == '0')
+                return;
+            if(i-start == 3 && s.charAt(start) > '2')
+                return;
+            if(i-start == 3 && s.charAt(start) == '2' && s.charAt(start+1) > '5')
+                return; 
+            if(i-start == 3 && s.charAt(start) == '2' && s.charAt(start+1) == '5' && s.charAt(start+2) > '5')
+                return;
+            if(dot < 3){
+                sb.insert(i+dot,'.');
+                build(s, sb, i, left-i+start+1, dot+1, ret);
+                sb.deleteCharAt(i+dot);
+            }
+            else if(i == s.length())
+                ret.add(sb.toString());
+        }
+    }
+
 }

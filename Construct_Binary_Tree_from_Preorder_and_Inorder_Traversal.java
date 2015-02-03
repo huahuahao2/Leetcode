@@ -42,4 +42,34 @@ public class Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal {
     }
     
     
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        TreeNode cur = null, temp = null;
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        int i = preorder.length-1, j = preorder.length-1;
+        while(i>=0 || j >=0) {
+            if(i>=0 && j >=0 &&  preorder[i] == inorder[j]) {
+                temp = new TreeNode(inorder[j]);//?
+                temp.right = cur;
+                cur = temp;
+                i--;
+                j--;
+            }
+            if(!s.isEmpty() && i >=0 && s.peek().val == preorder[i]) {
+                temp = s.pop();
+                temp.left = cur;
+                cur = temp;//?
+                i--;
+                continue;
+            }
+            if(i>=0 && j >=0 && preorder[i]!=inorder[j]){
+                temp = new TreeNode(inorder[j]);
+                temp.right = cur;
+                cur = null;
+                s.push(temp);
+                j--;
+            }
+        }
+        return cur;
+    }
+
 }

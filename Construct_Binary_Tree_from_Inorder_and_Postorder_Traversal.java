@@ -32,4 +32,36 @@ public class Construct_Binary_Tree_from_Inorder_and_Postorder_Traversal {
         j++;
         return old;
     }
+
+    //it not easy to observe
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        TreeNode cur = null, temp = null;
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        int i = 0, j = 0;
+        while(i<inorder.length || j <inorder.length) {
+            if(i<inorder.length && j <inorder.length && inorder[i] == postorder[j]) {
+                temp = new TreeNode(inorder[i]);
+                temp.left = cur;
+                cur = temp;
+                i++;
+                j++;
+            }
+            if(!s.isEmpty() && j <inorder.length && s.peek().val == postorder[j]) {
+                temp = s.pop();
+                temp.right = cur;
+                cur = temp;
+                j++;
+                continue;
+            }
+            if(i<inorder.length && j <inorder.length && inorder[i]!=postorder[j]){
+                temp = new TreeNode(inorder[i]);
+                temp.left = cur;
+                cur = null;
+                s.push(temp);
+                i++;
+            }
+        }
+        return cur;
+    }
+
 }
